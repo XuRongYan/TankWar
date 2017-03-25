@@ -84,6 +84,7 @@ public class TankWarClient extends Frame {
         for (int i = 0; i < missileList.size(); i++) {
             Missile missile = missileList.get(i);
             missile.hitTanks(tankList);
+            missile.hitTank(tank);
             missile.draw(g);
         }
 

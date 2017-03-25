@@ -13,6 +13,7 @@ public class Missile {
     Tank.Direction direction;
     private static final int SPEED = 10;
     private boolean live = true;
+    private boolean good;
     private TankWarClient tankWarClient;
 
     public Missile(int x, int y, Tank.Direction direction) {
@@ -21,8 +22,9 @@ public class Missile {
         this.direction = direction;
     }
 
-    public Missile(int x, int y, Tank.Direction direction, TankWarClient tankWarClient) {
+    public Missile(int x, int y, boolean good, Tank.Direction direction, TankWarClient tankWarClient) {
         this(x, y, direction);
+        this.good = good;
         this.tankWarClient = tankWarClient;
     }
 
@@ -31,7 +33,7 @@ public class Missile {
             tankWarClient.getMissileList().remove(this);
         }
         Color color = g.getColor();
-        g.setColor(Color.BLACK);
+        g.setColor(good ? Color.BLACK : Color.RED);
         g.fillOval(x, y, WIDTH, HEIGHT);
         g.setColor(color);
         move();
@@ -85,7 +87,7 @@ public class Missile {
     }
 
     public boolean hitTank(Tank tank) {
-        if (this.getRect().intersects(tank.getRect()) && tank.isLive()) {
+        if (live && this.getRect().intersects(tank.getRect()) && tank.isLive() && this.good != tank.isGood()) {
             live = false;
             tank.setLive(false);
             Explode explode = new Explode(x, y, this.tankWarClient);

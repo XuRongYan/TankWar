@@ -141,6 +141,9 @@ public class Tank {
                 step --;
             }
 
+            if (random.nextInt(40) > 37) {
+                this.fire();
+            }
         }
     }
 
@@ -198,9 +201,12 @@ public class Tank {
     }
 
     public Missile fire() {
+        if (!isLive()) {
+            return null;
+        }
         int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
         int y = this.y + Tank.HEIGHT / 2 - Missile.WIDTH / 2;
-        Missile missile = new Missile(x, y, barrelDir, tc);
+        Missile missile = new Missile(x, y, good, barrelDir, tc);
         tc.getMissileList().add(missile);
         return missile;
     }
@@ -215,5 +221,9 @@ public class Tank {
 
     public void setLive(boolean live) {
         this.live = live;
+    }
+
+    public boolean isGood() {
+        return good;
     }
 }
