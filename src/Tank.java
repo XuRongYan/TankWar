@@ -17,6 +17,7 @@ public class Tank {
     private int step = 0;
     private int life = 100;
     private TankWarClient tc;
+    private BloodBar bloodBar = new BloodBar();
     private boolean good;
     private boolean live = true;
     private boolean bU = false, bD = false, bL = false, bR = false;
@@ -56,6 +57,9 @@ public class Tank {
         g.setColor(good ? Color.GREEN : Color.blue);
         g.fillOval(x, y, WIDTH, HEIGHT);
         g.setColor(Color.BLACK);
+        if (good) {
+            bloodBar.draw(g);
+        }
         switch (barrelDir) {
             case L:
                 g.drawLine(x + WIDTH / 2, y + WIDTH / 2, x, y + HEIGHT / 2);
@@ -297,5 +301,17 @@ public class Tank {
 
     public void setLife(int life) {
         this.life = life;
+    }
+
+    private class BloodBar {
+        public void draw(Graphics g) {
+            Color color = g.getColor();
+            g.setColor(Color.BLACK);
+            g.drawRect(x, y - 20, WIDTH, 10);
+            g.setColor(Color.RED);
+            int width = (WIDTH - 2) * life / 100;
+            g.fillRect(x + 1, y - 19, width, 9);
+            g.setColor(color);
+        }
     }
 }
