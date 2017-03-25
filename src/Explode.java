@@ -28,6 +28,7 @@ public class Explode {
             step = 0;
             return;
         }
+        
         Color color = g.getColor();
         g.setColor(Color.orange);
         g.fillOval(x, y, diameters[step], diameters[step]);

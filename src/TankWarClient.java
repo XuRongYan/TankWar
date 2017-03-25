@@ -14,7 +14,7 @@ public class TankWarClient extends Frame {
     public static final int WIDTH = 1600;
     public static final int HEIGHT = 900;
     Tank tank = new Tank(50, 50, this, true);
-    Tank enimyTank = new Tank(100, 100, this, false);
+    private List<Tank> tankList = new ArrayList<>();
     private List<Explode> explodeList = new ArrayList<>();
     private List<Missile> missileList = new ArrayList<>();
     private Image offScreenImage = null;
@@ -39,6 +39,9 @@ public class TankWarClient extends Frame {
                 System.exit(0);
             }
         });
+        for (int i = 0; i < 10; i++) {
+            tankList.add(new Tank(80 * (i + 1), 50, this, false));
+        }
         new Thread(new PaintThread()).start();
     }
 
@@ -66,15 +69,21 @@ public class TankWarClient extends Frame {
     public void paint(Graphics g) {
         g.drawString("missile count: " + missileList.size(), 10, 50);
         g.drawString("explode count: " + explodeList.size(), 10, 70);
+        g.drawString("enemy count: " + tankList.size(), 10, 90);
         tank.draw(g);
-        enimyTank.draw(g);
+
+        for (int i = 0; i < tankList.size(); i++) {
+            Tank tank = tankList.get(i);
+            tank.draw(g);
+        }
+
         for (int i = 0; i < explodeList.size(); i++) {
             Explode explode = explodeList.get(i);
             explode.draw(g);
         }
         for (int i = 0; i < missileList.size(); i++) {
             Missile missile = missileList.get(i);
-            missile.hitTank(enimyTank);
+            missile.hitTanks(tankList);
             missile.draw(g);
         }
 
@@ -86,7 +95,7 @@ public class TankWarClient extends Frame {
             while (true) {
                 repaint();
                 try {
-                    Thread.sleep(500);
+                    Thread.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -117,5 +126,9 @@ public class TankWarClient extends Frame {
 
     public List<Explode> getExplodeList() {
         return explodeList;
+    }
+
+    public List<Tank> getTankList() {
+        return tankList;
     }
 }

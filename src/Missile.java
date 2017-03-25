@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 /**
  * 子弹类
@@ -89,6 +91,17 @@ public class Missile {
             Explode explode = new Explode(x, y, this.tankWarClient);
             this.tankWarClient.getExplodeList().add(explode);
             return true;
+        }
+        return false;
+    }
+
+    public boolean hitTanks(List<Tank> tankList) {
+        for (int i = 0; i < tankList.size(); i++) {
+            Tank tank = tankList.get(i);
+            if (hitTank(tank)) {
+                tankWarClient.getTankList().remove(tank);
+                return true;
+            }
         }
         return false;
     }
