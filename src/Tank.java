@@ -15,6 +15,7 @@ public class Tank {
     private int x, y;
     private int oldX, oldY;
     private int step = 0;
+    private int life = 100;
     private TankWarClient tc;
     private boolean good;
     private boolean live = true;
@@ -288,5 +289,13 @@ public class Tank {
 
     public boolean isGood() {
         return good;
+    }
+
+    public int getLife() {
+        return life;
+    }
+
+    public void setLife(int life) {
+        this.life = life;
     }
 }
