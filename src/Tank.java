@@ -205,6 +205,9 @@ public class Tank {
             case KeyEvent.VK_CONTROL:
                 fire();
                 break;
+            case KeyEvent.VK_A:
+                superFire();
+                break;
         }
         locateDirection();
     }
@@ -218,6 +221,24 @@ public class Tank {
         Missile missile = new Missile(x, y, good, barrelDir, tc);
         tc.getMissileList().add(missile);
         return missile;
+    }
+
+    public Missile fire(Direction dir) {
+        if (!isLive()) {
+            return null;
+        }
+        int x = this.x + Tank.WIDTH / 2 - Missile.WIDTH / 2;
+        int y = this.y + Tank.HEIGHT / 2 - Missile.WIDTH / 2;
+        Missile missile = new Missile(x, y, good, dir, tc);
+        tc.getMissileList().add(missile);
+        return missile;
+    }
+
+    public void superFire() {
+        Direction[] directions = Direction.values();
+        for (int i = 0; i < 8; i++) {
+            fire(directions[i]);
+        }
     }
 
     public boolean collidesWall(Wall wall) {
