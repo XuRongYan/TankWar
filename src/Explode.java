@@ -19,6 +19,7 @@ public class Explode {
 
     public void draw(Graphics g) {
         if (!live) {
+            tankWarClient.getExplodeList().remove(this);
             return;
         }
 

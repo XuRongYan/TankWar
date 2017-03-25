@@ -65,6 +65,7 @@ public class TankWarClient extends Frame {
     @Override
     public void paint(Graphics g) {
         g.drawString("missile count: " + missileList.size(), 10, 50);
+        g.drawString("explode count: " + explodeList.size(), 10, 70);
         tank.draw(g);
         enimyTank.draw(g);
         for (int i = 0; i < explodeList.size(); i++) {
