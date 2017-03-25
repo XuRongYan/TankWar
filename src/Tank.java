@@ -12,6 +12,7 @@ public class Tank {
     private static final int SPEED = 5;
     private static Random random = new Random();
     private int x, y;
+    private int oldX, oldY;
     private int step = 0;
     private TankWarClient tc;
     private boolean good;
@@ -28,6 +29,8 @@ public class Tank {
     private Tank(int x, int y) {
         this.x = x;
         this.y = y;
+        oldX = x;
+        oldY = y;
     }
 
     public Tank(int x, int y, TankWarClient tc) {
@@ -83,6 +86,9 @@ public class Tank {
     }
 
     private void move() {
+        oldX = x;
+        oldY = y;
+
         switch (dir) {
             case L:
                 x -= SPEED;
@@ -119,6 +125,8 @@ public class Tank {
         if (dir != Direction.STOP) {
             barrelDir = dir;
         }
+
+
 
         if (x < 0) {
             x = 0;
@@ -209,6 +217,19 @@ public class Tank {
         Missile missile = new Missile(x, y, good, barrelDir, tc);
         tc.getMissileList().add(missile);
         return missile;
+    }
+
+    public boolean collidesWall(Wall wall) {
+        if (this.isLive() && this.getRect().intersects(wall.getRect())) {
+            this.stay();
+            return true;
+        }
+        return false;
+    }
+
+    private void stay() {
+        this.x = oldX;
+        this.y = oldY;
     }
 
     public Rectangle getRect(){

@@ -86,6 +86,14 @@ public class Missile {
         return new Rectangle(x, y, WIDTH, HEIGHT);
     }
 
+    public boolean hitWall(Wall wall) {
+        if (live && this.getRect().intersects(wall.getRect())) {
+            live = false;
+            return true;
+        }
+        return false;
+    }
+
     public boolean hitTank(Tank tank) {
         if (live && this.getRect().intersects(tank.getRect()) && tank.isLive() && this.good != tank.isGood()) {
             live = false;
@@ -96,6 +104,8 @@ public class Missile {
         }
         return false;
     }
+
+
 
     public boolean hitTanks(List<Tank> tankList) {
         for (int i = 0; i < tankList.size(); i++) {

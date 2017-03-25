@@ -14,10 +14,12 @@ public class TankWarClient extends Frame {
     public static final int WIDTH = 1600;
     public static final int HEIGHT = 900;
     Tank tank = new Tank(50, 50, this, true);
+    Wall wall = new Wall(100, 100, 50, 300, this);
     private List<Tank> tankList = new ArrayList<>();
     private List<Explode> explodeList = new ArrayList<>();
     private List<Missile> missileList = new ArrayList<>();
     private Image offScreenImage = null;
+    private static Random random = new Random();
 
     public static void main(String[] args) {
         TankWarClient tankWarClient = new TankWarClient();
@@ -70,10 +72,13 @@ public class TankWarClient extends Frame {
         g.drawString("missile count: " + missileList.size(), 10, 50);
         g.drawString("explode count: " + explodeList.size(), 10, 70);
         g.drawString("enemy count: " + tankList.size(), 10, 90);
+        tank.collidesWall(wall);
         tank.draw(g);
+        wall.draw(g);
 
         for (int i = 0; i < tankList.size(); i++) {
             Tank tank = tankList.get(i);
+            tank.collidesWall(wall);
             tank.draw(g);
         }
 
@@ -85,6 +90,7 @@ public class TankWarClient extends Frame {
             Missile missile = missileList.get(i);
             missile.hitTanks(tankList);
             missile.hitTank(tank);
+            missile.hitWall(wall);
             missile.draw(g);
         }
 
