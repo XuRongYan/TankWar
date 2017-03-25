@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 
 /**
  * 坦克类
@@ -9,11 +10,14 @@ public class Tank {
     public static final int WIDTH = 30;
     public static final int HEIGHT = 30;
     private static final int SPEED = 5;
+    private static Random random = new Random();
     private int x, y;
+    private int step = 0;
     private TankWarClient tc;
     private boolean good;
     private boolean live = true;
     private boolean bU = false, bD = false, bL = false, bR = false;
+    private Direction[] directions = Direction.values();
 
 
     enum Direction {L, LU, U, RU, R, RD, D, LD, STOP}
@@ -38,6 +42,9 @@ public class Tank {
 
     public void draw(Graphics g) {
         if (!isLive()) {
+            if (!good) {
+                tc.getTankList().remove(this);
+            }
             return;
         }
         Color c = g.getColor();
@@ -124,6 +131,16 @@ public class Tank {
         }
         if (y + Tank.HEIGHT > TankWarClient.HEIGHT) {
             y = TankWarClient.HEIGHT - Tank.HEIGHT;
+        }
+
+        if (!good) {
+            if (step == 0) {
+                step = random.nextInt(12) + 3;
+                dir = directions[random.nextInt(directions.length)];
+            } else {
+                step --;
+            }
+
         }
     }
 

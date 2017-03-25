@@ -99,7 +99,6 @@ public class Missile {
         for (int i = 0; i < tankList.size(); i++) {
             Tank tank = tankList.get(i);
             if (hitTank(tank)) {
-                tankWarClient.getTankList().remove(tank);
                 return true;
             }
         }
