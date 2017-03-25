@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Random;
+import java.util.*;
+import java.util.List;
 
 /**
  * 坦克类
@@ -223,6 +224,26 @@ public class Tank {
         if (this.isLive() && this.getRect().intersects(wall.getRect())) {
             this.stay();
             return true;
+        }
+        return false;
+    }
+
+    public boolean collidesTanks(List<Tank> tankList, Tank...tanks) {
+        for (int i = 0; i < tankList.size(); i++) {
+            Tank tank = tankList.get(i);
+            if (this != tank &&this.isLive() && tank.isLive() && this.getRect().intersects(tank.getRect())) {
+                this.stay();
+                tank.stay();
+                return true;
+            }
+        }
+
+        for (int i = 0; i < tanks.length; i++) {
+            if (this != tanks[i] && this.isLive() && tanks[i].isLive() && this.getRect().intersects(tanks[i].getRect())) {
+                this.stay();
+                tanks[i].stay();
+                return true;
+            }
         }
         return false;
     }

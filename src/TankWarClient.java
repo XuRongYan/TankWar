@@ -73,12 +73,14 @@ public class TankWarClient extends Frame {
         g.drawString("explode count: " + explodeList.size(), 10, 70);
         g.drawString("enemy count: " + tankList.size(), 10, 90);
         tank.collidesWall(wall);
+        tank.collidesTanks(tankList);
         tank.draw(g);
         wall.draw(g);
 
         for (int i = 0; i < tankList.size(); i++) {
             Tank tank = tankList.get(i);
             tank.collidesWall(wall);
+            tank.collidesTanks(tankList, tank);
             tank.draw(g);
         }
 
