@@ -85,12 +85,11 @@ public class TankWarClient extends Frame {
             while (true) {
                 repaint();
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-
         }
     }
 
@@ -113,5 +112,9 @@ public class TankWarClient extends Frame {
 
     public List<Missile> getMissileList() {
         return missileList;
+    }
+
+    public List<Explode> getExplodeList() {
+        return explodeList;
     }
 }
