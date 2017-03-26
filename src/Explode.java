@@ -6,6 +6,9 @@ import java.awt.*;
  */
 public class Explode {
     int x, y;
+    /**
+     * 爆炸的半径变化
+     */
     int[] diameters = {5, 12, 23, 36, 52, 31, 10, 5};
     private boolean live = true;
     private TankWarClient tankWarClient;

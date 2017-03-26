@@ -12,8 +12,14 @@ import java.util.List;
  */
 public class TankWarClient extends Frame {
     private static Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-    public static final int WIDTH = screen.width; //整个坦克游戏的宽度
-    public static final int HEIGHT = screen.height; //整个坦克游戏的高度
+    /**
+     * 整个坦克游戏的宽度
+     */
+    public static final int WIDTH = screen.width;
+    /**
+     * 整个坦克游戏的高度
+     */
+    public static final int HEIGHT = screen.height;
     private Tank tank = new Tank(50, 50, this, true);
     private Wall wall = new Wall(100, 100, 50, 300, this);
     private List<Tank> tankList = new ArrayList<>();

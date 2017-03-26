@@ -8,8 +8,17 @@ import java.util.List;
  * Created by 徐溶延 on 2017/3/18.
  */
 public class Tank {
+    /**
+     * 坦克的宽度
+     */
     public static final int WIDTH = 30;
+    /**
+     * 坦克的高度
+     */
     public static final int HEIGHT = 30;
+    /**
+     * 坦克的行进速度
+     */
     private static final int SPEED = 5;
     private static Random random = new Random();
     private int x, y;

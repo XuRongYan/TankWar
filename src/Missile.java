@@ -7,10 +7,19 @@ import java.util.List;
  * Created by 徐溶延 on 2017/3/19.
  */
 public class Missile {
+    /**
+     * 子弹的宽度
+     */
     public static final int WIDTH = 10;
+    /**
+     * 子弹的大小
+     */
     public static final int HEIGHT = 10;
     private int x, y;
     Tank.Direction direction;
+    /**
+     * 子弹的飞行速度
+     */
     private static final int SPEED = 10;
     private boolean live = true;
     private boolean good;
