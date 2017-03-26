@@ -18,6 +18,7 @@ public class TankWarClient extends Frame {
     private List<Tank> tankList = new ArrayList<>();
     private List<Explode> explodeList = new ArrayList<>();
     private List<Missile> missileList = new ArrayList<>();
+    private Blood blood = new Blood(200, 200, this);
     private Image offScreenImage = null;
     private static Random random = new Random();
 
@@ -27,7 +28,7 @@ public class TankWarClient extends Frame {
     }
 
     public void launch() {
-        this.setLocation(300, 400);
+        this.setLocation(300, 100);
         this.setSize(WIDTH, HEIGHT);
         this.setVisible(true);
         this.setResizable(false);
@@ -75,6 +76,8 @@ public class TankWarClient extends Frame {
         g.drawString("life: " + tank.getLife(), 10, 110);
         tank.collidesWall(wall);
         tank.collidesTanks(tankList);
+        tank.eatBlood(blood);
+        blood.draw(g);
         tank.draw(g);
         wall.draw(g);
 
