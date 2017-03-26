@@ -44,7 +44,13 @@ public class TankWarClient extends Frame {
             }
         });
         for (int i = 0; i < 10; i++) {
-            tankList.add(new Tank(80 * (i + 1), 50, this, false));
+            int x = random.nextInt(WIDTH);
+            int y = random.nextInt(HEIGHT);
+            Tank tank = new Tank(x, y, this, false);
+            if (!tank.collidesWall(wall)) {
+                tankList.add(tank);
+            }
+
         }
         new Thread(new PaintThread()).start();
         new Thread(new AddBloodThread()).start();
