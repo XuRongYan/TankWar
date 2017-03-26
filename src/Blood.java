@@ -1,26 +1,92 @@
 import java.awt.*;
+import java.util.Random;
 
 /**
  * 血块类
  * Created by 徐溶延 on 2017/3/26.
  */
 public class Blood {
+    private static final int SPEED = 3;
     private int x, y;
+    private int step = 0;
     private boolean live = true;
+    private Tank.Direction direction;
+    private static Random random = new Random();
+    private static Tank.Direction[] directions = Tank.Direction.values();
     private TankWarClient tankWarClient;
 
     public void draw(Graphics g) {
-        if (!live) return;
+        if (!live) {
+            tankWarClient.getBloodList().remove(this);
+            return;
+        }
         Color color = g.getColor();
         g.setColor(Color.GREEN);
         g.fillOval(x, y, 10, 10);
         g.setColor(color);
+        move();
     }
 
-    public Blood(int x, int y, TankWarClient tankWarClient) {
-        this.x = x;
-        this.y = y;
+    public Blood(TankWarClient tankWarClient) {
+        this.x = random.nextInt(TankWarClient.WIDTH);
+        this.y = random.nextInt(TankWarClient.HEIGHT);
         this.tankWarClient = tankWarClient;
+        direction = directions[random.nextInt(directions.length)];
+    }
+
+    public void move() {
+        switch (direction) {
+            case L:
+                x -= SPEED;
+                break;
+            case LU:
+                x -= Math.sqrt(SPEED * SPEED / 2);
+                y -= Math.sqrt(SPEED * SPEED / 2);
+                break;
+            case U:
+                y -= SPEED;
+                break;
+            case RU:
+                x += Math.sqrt(SPEED * SPEED / 2);
+                y -= Math.sqrt(SPEED * SPEED / 2);
+                break;
+            case R:
+                x += SPEED;
+                break;
+            case RD:
+                x += Math.sqrt(SPEED * SPEED / 2);
+                y += Math.sqrt(SPEED * SPEED / 2);
+                break;
+            case D:
+                y += SPEED;
+                break;
+            case LD:
+                x -= Math.sqrt(SPEED * SPEED / 2);
+                y += Math.sqrt(SPEED * SPEED / 2);
+                break;
+            case STOP:
+                break;
+        }
+
+        if (x < 0) {
+            x = 0;
+        }
+        if (y < 31) {
+            y = 31;
+        }
+        if (x + 10 > TankWarClient.WIDTH) {
+            x = TankWarClient.WIDTH - 10;
+        }
+        if (y + 10 > TankWarClient.HEIGHT) {
+            y = TankWarClient.HEIGHT - 10;
+        }
+
+        if (step == 0) {
+            step = random.nextInt(12) + 3;
+            direction = directions[random.nextInt(directions.length)];
+        } else {
+            step --;
+        }
     }
 
     public Rectangle getRect(){

@@ -11,14 +11,15 @@ import java.util.List;
  * Created by 徐溶延 on 2017/3/18.
  */
 public class TankWarClient extends Frame {
-    public static final int WIDTH = 1600;
-    public static final int HEIGHT = 900;
+    private static Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+    public static final int WIDTH = screen.width;
+    public static final int HEIGHT = screen.height;
     Tank tank = new Tank(50, 50, this, true);
     Wall wall = new Wall(100, 100, 50, 300, this);
     private List<Tank> tankList = new ArrayList<>();
     private List<Explode> explodeList = new ArrayList<>();
     private List<Missile> missileList = new ArrayList<>();
-    private Blood blood = new Blood(200, 200, this);
+    private List<Blood> bloodList = new ArrayList<>();
     private Image offScreenImage = null;
     private static Random random = new Random();
 
@@ -28,7 +29,7 @@ public class TankWarClient extends Frame {
     }
 
     public void launch() {
-        this.setLocation(300, 100);
+        this.setLocation(0, 0);
         this.setSize(WIDTH, HEIGHT);
         this.setVisible(true);
         this.setResizable(false);
@@ -46,11 +47,13 @@ public class TankWarClient extends Frame {
             tankList.add(new Tank(80 * (i + 1), 50, this, false));
         }
         new Thread(new PaintThread()).start();
+        new Thread(new AddBloodThread()).start();
     }
 
     /**
      * 利用绘制虚拟背景图的原理实现双缓冲，虽然机子牛逼不用这个也不闪烁
      * 将要绘制的图片先绘制在一张Image放在屏幕后
+     *
      * @param g
      */
     @Override
@@ -74,12 +77,17 @@ public class TankWarClient extends Frame {
         g.drawString("explode count: " + explodeList.size(), 10, 70);
         g.drawString("enemy count: " + tankList.size(), 10, 90);
         g.drawString("life: " + tank.getLife(), 10, 110);
+        g.drawString("blood size: " + bloodList.size(), 10, 130);
         tank.collidesWall(wall);
         tank.collidesTanks(tankList);
-        tank.eatBlood(blood);
-        blood.draw(g);
+        tank.eatBloodAll(bloodList);
         tank.draw(g);
         wall.draw(g);
+
+        for (int i = 0; i < bloodList.size(); i++) {
+            Blood blood = bloodList.get(i);
+            blood.draw(g);
+        }
 
         for (int i = 0; i < tankList.size(); i++) {
             Tank tank = tankList.get(i);
@@ -100,6 +108,22 @@ public class TankWarClient extends Frame {
             missile.draw(g);
         }
 
+    }
+
+    private class AddBloodThread implements Runnable {
+        @Override
+        public void run() {
+            while (true) {
+                if (bloodList.size() <= 2) {
+                    bloodList.add(new Blood(TankWarClient.this));
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     private class PaintThread implements Runnable {
@@ -143,5 +167,9 @@ public class TankWarClient extends Frame {
 
     public List<Tank> getTankList() {
         return tankList;
+    }
+
+    public List<Blood> getBloodList() {
+        return bloodList;
     }
 }

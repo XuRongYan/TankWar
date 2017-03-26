@@ -255,6 +255,16 @@ public class Tank {
         return false;
     }
 
+    public boolean eatBloodAll(List<Blood> bloodList) {
+        for (int i = 0; i < bloodList.size(); i++) {
+            Blood blood = bloodList.get(i);
+            if (eatBlood(blood)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean collidesWall(Wall wall) {
         if (this.isLive() && this.getRect().intersects(wall.getRect())) {
             this.stay();
