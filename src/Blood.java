@@ -8,6 +8,7 @@ import java.util.Random;
 public class Blood {
     private static final int SPEED = 3;
     private int x, y;
+    private int oldX, oldY;
     private int step = 0;
     private boolean live = true;
     private Tank.Direction direction;
@@ -30,11 +31,15 @@ public class Blood {
     public Blood(TankWarClient tankWarClient) {
         this.x = random.nextInt(TankWarClient.WIDTH);
         this.y = random.nextInt(TankWarClient.HEIGHT);
+        this.oldX = x;
+        this.oldY = y;
         this.tankWarClient = tankWarClient;
         direction = directions[random.nextInt(directions.length)];
     }
 
     public void move() {
+        oldX = x;
+        oldY = y;
         switch (direction) {
             case L:
                 x -= SPEED;
@@ -91,11 +96,17 @@ public class Blood {
 
     public boolean hitWall(Wall wall) {
         if (live && this.getRect().intersects(wall.getRect())) {
-            live = false;
+            this.stay();
             return true;
         }
         return false;
     }
+
+    private void stay() {
+        this.x = oldX;
+        this.y = oldY;
+    }
+
 
     public Rectangle getRect(){
         return new Rectangle(x, y, 10, 10);
