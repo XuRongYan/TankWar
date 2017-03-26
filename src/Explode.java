@@ -11,12 +11,22 @@ public class Explode {
     private TankWarClient tankWarClient;
     private int step = 0;
 
+    /**
+     * 爆炸类的构造方法
+     * @param x 爆炸的x坐标
+     * @param y 爆炸的y坐标
+     * @param tankWarClient
+     */
     public Explode(int x, int y, TankWarClient tankWarClient) {
         this.x = x;
         this.y = y;
         this.tankWarClient = tankWarClient;
     }
 
+    /**
+     * 画出爆炸
+     * @param g 画笔
+     */
     public void draw(Graphics g) {
         if (!live) {
             tankWarClient.getExplodeList().remove(this);

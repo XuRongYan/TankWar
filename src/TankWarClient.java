@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class TankWarClient extends Frame {
     private static Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-    public static final int WIDTH = screen.width;
-    public static final int HEIGHT = screen.height;
-    Tank tank = new Tank(50, 50, this, true);
-    Wall wall = new Wall(100, 100, 50, 300, this);
+    public static final int WIDTH = screen.width; //整个坦克游戏的宽度
+    public static final int HEIGHT = screen.height; //整个坦克游戏的高度
+    private Tank tank = new Tank(50, 50, this, true);
+    private Wall wall = new Wall(100, 100, 50, 300, this);
     private List<Tank> tankList = new ArrayList<>();
     private List<Explode> explodeList = new ArrayList<>();
     private List<Missile> missileList = new ArrayList<>();
@@ -54,7 +54,7 @@ public class TankWarClient extends Frame {
      * 利用绘制虚拟背景图的原理实现双缓冲，虽然机子牛逼不用这个也不闪烁
      * 将要绘制的图片先绘制在一张Image放在屏幕后
      *
-     * @param g
+     * @param g 画笔
      */
     @Override
     public void update(Graphics g) {
@@ -117,6 +117,9 @@ public class TankWarClient extends Frame {
 
     }
 
+    /**
+     * 添加坦克的方法
+     */
     private void addTank() {
         int x = random.nextInt(WIDTH);
         int y = random.nextInt(HEIGHT);
@@ -145,6 +148,9 @@ public class TankWarClient extends Frame {
 //        }
 //    }
 
+    /**
+     * 添加血块的线程
+     */
     private class AddBloodThread implements Runnable {
         @Override
         public void run() {
@@ -161,6 +167,9 @@ public class TankWarClient extends Frame {
         }
     }
 
+    /**
+     * 重绘线程
+     */
     private class PaintThread implements Runnable {
         @Override
         public void run() {
@@ -175,6 +184,9 @@ public class TankWarClient extends Frame {
         }
     }
 
+    /**
+     * 键盘监听器类
+     */
     private class KeyMonitor extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
