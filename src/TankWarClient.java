@@ -44,13 +44,7 @@ public class TankWarClient extends Frame {
             }
         });
         for (int i = 0; i < 10; i++) {
-            int x = random.nextInt(WIDTH);
-            int y = random.nextInt(HEIGHT);
-            Tank tank = new Tank(x, y, this, false);
-            if (!tank.collidesWall(wall)) {
-                tankList.add(tank);
-            }
-
+            addTank();
         }
         new Thread(new PaintThread()).start();
         new Thread(new AddBloodThread()).start();
@@ -90,6 +84,12 @@ public class TankWarClient extends Frame {
         tank.draw(g);
         wall.draw(g);
 
+        if (tankList.size() <= 0) {
+            for (int i = 0; i < 5; i++) {
+                addTank();
+            }
+        }
+
         for (int i = 0; i < bloodList.size(); i++) {
             Blood blood = bloodList.get(i);
             blood.hitWall(wall);
@@ -116,6 +116,34 @@ public class TankWarClient extends Frame {
         }
 
     }
+
+    private void addTank() {
+        int x = random.nextInt(WIDTH);
+        int y = random.nextInt(HEIGHT);
+        Tank tank = new Tank(x, y, this, false);
+        if (!tank.collidesWall(wall)) {
+            tankList.add(tank);
+        }
+    }
+
+//    private class AddEnemy implements Runnable {
+//
+//        @Override
+//        public void run() {
+//            while (true) {
+//                if (tankList.size() <= 0) {
+//                    for (int i = 0; i < 10; i++) {
+//                        addTank();
+//                        try {
+//                            Thread.sleep(1000);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     private class AddBloodThread implements Runnable {
         @Override
