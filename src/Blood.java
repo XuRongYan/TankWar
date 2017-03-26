@@ -89,6 +89,14 @@ public class Blood {
         }
     }
 
+    public boolean hitWall(Wall wall) {
+        if (live && this.getRect().intersects(wall.getRect())) {
+            live = false;
+            return true;
+        }
+        return false;
+    }
+
     public Rectangle getRect(){
         return new Rectangle(x, y, 10, 10);
     }

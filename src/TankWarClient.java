@@ -92,6 +92,7 @@ public class TankWarClient extends Frame {
 
         for (int i = 0; i < bloodList.size(); i++) {
             Blood blood = bloodList.get(i);
+            blood.hitWall(wall);
             blood.draw(g);
         }
 
@@ -151,6 +152,11 @@ public class TankWarClient extends Frame {
         public void keyPressed(KeyEvent e) {
             super.keyPressed(e);
             tank.onKeyPressed(e);
+            if (e.getKeyCode() == KeyEvent.VK_F12) {
+                if (!tank.isLive()) {
+                    tank = new Tank(50, 50, TankWarClient.this, true);
+                }
+            }
         }
 
         @Override
