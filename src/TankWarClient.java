@@ -5,6 +5,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -53,7 +54,14 @@ public class TankWarClient extends Frame {
                 System.exit(0);
             }
         });
-        for (int i = 0; i < 10; i++) {
+        Properties properties = new Properties();
+        try {
+            properties.load(getClass().getResourceAsStream("config/tank.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int initTankCount = Integer.parseInt(properties.getProperty("initTankCount"));
+        for (int i = 0; i < initTankCount; i++) {
             addTank();
         }
         new Thread(new PaintThread()).start();
