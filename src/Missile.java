@@ -16,7 +16,7 @@ public class Missile {
      */
     public static final int HEIGHT = 10;
     private int x, y;
-    Tank.Direction direction;
+    Direction direction;
     /**
      * 子弹的飞行速度
      */
@@ -31,7 +31,7 @@ public class Missile {
      * @param y 子弹y坐标
      * @param direction 子弹方向
      */
-    public Missile(int x, int y, Tank.Direction direction) {
+    public Missile(int x, int y, Direction direction) {
         this.x = x;
         this.y = y;
         this.direction = direction;
@@ -45,7 +45,7 @@ public class Missile {
      * @param direction 子弹方向
      * @param tankWarClient 坦克客户端类对象的引用
      */
-    public Missile(int x, int y, boolean good, Tank.Direction direction, TankWarClient tankWarClient) {
+    public Missile(int x, int y, boolean good, Direction direction, TankWarClient tankWarClient) {
         this(x, y, direction);
         this.good = good;
         this.tankWarClient = tankWarClient;

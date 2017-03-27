@@ -33,7 +33,6 @@ public class Tank {
     private Direction[] directions = Direction.values();
 
 
-    enum Direction {L, LU, U, RU, R, RD, D, LD, STOP}
 
     Direction dir = Direction.STOP;
     Direction barrelDir = Direction.D; //炮筒方向

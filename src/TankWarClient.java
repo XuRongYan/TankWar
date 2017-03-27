@@ -1,3 +1,5 @@
+import sun.rmi.runtime.Log;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -28,6 +30,8 @@ public class TankWarClient extends Frame {
     private List<Blood> bloodList = new ArrayList<>();
     private Image offScreenImage = null;
     private static Random random = new Random();
+    private Thread bloodThread;
+    int x = 0;
 
     public static void main(String[] args) {
         TankWarClient tankWarClient = new TankWarClient();
@@ -53,7 +57,8 @@ public class TankWarClient extends Frame {
             addTank();
         }
         new Thread(new PaintThread()).start();
-        new Thread(new AddBloodThread()).start();
+        bloodThread = new Thread(new AddBloodThread());
+        bloodThread.start();
     }
 
     /**
@@ -79,11 +84,12 @@ public class TankWarClient extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        g.drawString("missile count: " + missileList.size(), 10, 50);
-        g.drawString("explode count: " + explodeList.size(), 10, 70);
-        g.drawString("enemy count: " + tankList.size(), 10, 90);
-        g.drawString("life: " + tank.getLife(), 10, 110);
-        g.drawString("blood size: " + bloodList.size(), 10, 130);
+        //g.drawString("missile count: " + missileList.size(), 10, 50);
+        //g.drawString("explode count: " + explodeList.size(), 10, 70);
+        g.drawString("enemy count: " + tankList.size(), 10, 50);
+        //g.drawString("life: " + tank.getLife(), 10, 110);
+        g.drawString("blood size: " + bloodList.size(), 10, 70);
+        //g.drawString("test: " + x, 10, 150);
         tank.collidesWall(wall);
         tank.collidesTanks(tankList);
         tank.eatBloodAll(bloodList);
@@ -96,11 +102,13 @@ public class TankWarClient extends Frame {
             }
         }
 
+
         for (int i = 0; i < bloodList.size(); i++) {
             Blood blood = bloodList.get(i);
             blood.hitWall(wall);
             blood.draw(g);
         }
+
 
         for (int i = 0; i < tankList.size(); i++) {
             Tank tank = tankList.get(i);
@@ -162,6 +170,7 @@ public class TankWarClient extends Frame {
         public void run() {
             while (true) {
                 if (bloodList.size() <= 2) {
+                    System.out.println("执行了");
                     bloodList.add(new Blood(TankWarClient.this));
                     try {
                         Thread.sleep(5000);
@@ -169,6 +178,8 @@ public class TankWarClient extends Frame {
                         e.printStackTrace();
                     }
                 }
+                //怪事，不加这一句话有很大的几率会产生血块不产生的问题
+                System.out.println(bloodList.size());
             }
         }
     }

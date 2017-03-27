@@ -11,9 +11,9 @@ public class Blood {
     private int oldX, oldY;
     private int step = 0;
     private boolean live = true;
-    private Tank.Direction direction;
+    private Direction direction;
     private static Random random = new Random();
-    private static Tank.Direction[] directions = Tank.Direction.values();
+    private static Direction[] directions = Direction.values();
     private TankWarClient tankWarClient;
 
     public void draw(Graphics g) {
