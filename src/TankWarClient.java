@@ -54,13 +54,8 @@ public class TankWarClient extends Frame {
                 System.exit(0);
             }
         });
-        Properties properties = new Properties();
-        try {
-            properties.load(getClass().getResourceAsStream("config/tank.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        int initTankCount = Integer.parseInt(properties.getProperty("initTankCount"));
+
+        int initTankCount = PropertiesManager.getIntProperties("initTankCount");
         for (int i = 0; i < initTankCount; i++) {
             addTank();
         }
@@ -105,7 +100,7 @@ public class TankWarClient extends Frame {
         wall.draw(g);
 
         if (tankList.size() <= 0) {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < PropertiesManager.getIntProperties("reloadTankCount"); i++) {
                 addTank();
             }
         }
