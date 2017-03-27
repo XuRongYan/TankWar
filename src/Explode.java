@@ -1,9 +1,4 @@
-import sun.awt.image.ToolkitImage;
-
 import java.awt.*;
-import java.awt.image.ImageConsumer;
-import java.awt.image.ImageProducer;
-import java.net.URLEncoder;
 
 /**
  * 爆炸类
@@ -12,7 +7,7 @@ import java.net.URLEncoder;
 public class Explode {
     int x, y;
     private static Toolkit toolkit = Toolkit.getDefaultToolkit();
-
+    private boolean init = false;
     private static Image[] images = {
             toolkit.getImage(Explode.class.getResource("images/0.gif")),
             toolkit.getImage(Explode.class.getResource("images/1.gif")),
@@ -50,6 +45,12 @@ public class Explode {
      * @param g 画笔
      */
     public void draw(Graphics g) {
+        //为了让图片全进入内存区
+        if (!init) {
+            for (int i = 0; i < images.length; i++) {
+                g.drawImage(images[i], -100, -100, null);
+            }
+        }
         if (!live) {
             tankWarClient.getExplodeList().remove(this);
             return;
